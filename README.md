@@ -183,7 +183,7 @@ I'm happy to give a **private walkthrough on a call** — a guided tour of the a
 
 - Email: oleksandruskov.it@gmail.com
 - Telegram: [@Alexus27](https://t.me/Alexus27)
-- LinkedIn: <!-- ASSET: linkedin url -->
+- LinkedIn: [oleksandr-uskov](https://www.linkedin.com/in/oleksandr-uskov/)
 
 ---
 
