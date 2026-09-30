@@ -4,13 +4,13 @@
 
   <h1>Cursaris</h1>
 
-  <p><b>One honest view of a crypto-futures book spread across twelve exchanges.</b><br/>
+  <p><b>One honest view of a crypto-futures book spread across more than ten exchanges.</b><br/>
   Native on iPhone, iPad, Mac and Apple Watch. Your keys and your data never leave the device.</p>
 
   <p>
     <img alt="Platform" src="https://img.shields.io/badge/platform-iOS%20%C2%B7%20iPadOS%20%C2%B7%20macOS%20%C2%B7%20watchOS-0A84FF?style=flat-square" />
     <img alt="Swift" src="https://img.shields.io/badge/Swift-SwiftUI%20%C2%B7%20SwiftData-F05138?style=flat-square&logo=swift&logoColor=white" />
-    <img alt="Exchanges" src="https://img.shields.io/badge/exchanges-12-1575F9?style=flat-square" />
+    <img alt="Exchanges" src="https://img.shields.io/badge/exchanges-10%2B-1575F9?style=flat-square" />
     <img alt="Tests" src="https://img.shields.io/badge/tests-4%2C500%2B-2EA043?style=flat-square" />
     <img alt="Dependencies" src="https://img.shields.io/badge/dependencies-none-success?style=flat-square" />
     <img alt="Source" src="https://img.shields.io/badge/source-proprietary-lightgrey?style=flat-square" />
@@ -43,7 +43,7 @@ anyone your keys.
 
 ## What it does
 
-**Brings twelve exchanges into one book.** Read-only API keys, live positions, and a sync engine
+**Brings more than ten exchanges into one book.** Read-only API keys, live positions, and a sync engine
 that reconciles what the venue says against what you already have. It detects partial closes,
 full closures and reopened positions, aggregates fills into a weighted-average exit price,
 deduplicates by trade ID, and falls back to a balance diff when an exchange's trade endpoint
@@ -61,9 +61,8 @@ a hedge behaves like a hedge, concentration limits and margin forecasting.
 harvesting opportunities, PDF and CSV export, and a comparison against the report you already
 filed so you can see exactly what moved.
 
-**Reads the market around the position.** Options Greeks and implied-volatility surface, max pain,
-put/call ratio, funding across venues, open interest, liquidation heatmaps, correlation with
-traditional markets.
+**Reads the market around the position.** Funding across venues, open interest and correlation
+with traditional markets.
 
 **Automates what you would otherwise watch for.** Trading plans that turn conditions into actions,
 built visually or written in plain language. Strategy backtesting with Monte Carlo and
@@ -78,16 +77,16 @@ companion, and hardware-wallet reading over NFC. Eight languages. Dark throughou
 
 <table>
   <tr>
-    <td align="center"><img src="docs/assets/networth.png" width="250"/><br/><sub>Net worth across venues</sub></td>
-    <td align="center"><img src="docs/assets/futures.png" width="250"/><br/><sub>Futures position with DCA ladder</sub></td>
+    <td align="center"><img src="docs/assets/networth.png" width="400"/><br/><sub>Net worth across venues</sub></td>
+    <td align="center"><img src="docs/assets/futures.png" width="400"/><br/><sub>Futures position with DCA ladder</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/assets/chart.png" width="250"/><br/><sub>Technical chart</sub></td>
-    <td align="center"><img src="docs/assets/history.png" width="250"/><br/><sub>Reconciled trade history</sub></td>
+    <td align="center"><img src="docs/assets/risk-var.png" width="400"/><br/><sub>Value at Risk, historical and Monte Carlo</sub></td>
+    <td align="center"><img src="docs/assets/history.png" width="400"/><br/><sub>Reconciled trade history</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/assets/exchanges.png" width="250"/><br/><sub>Exchange connections</sub></td>
-    <td align="center"><img src="docs/assets/import.png" width="250"/><br/><sub>Import preview before anything is written</sub></td>
+    <td align="center"><img src="docs/assets/chart.png" width="400"/><br/><sub>Technical chart</sub></td>
+    <td align="center"><img src="docs/assets/import.png" width="400"/><br/><sub>Import preview before anything is written</sub></td>
   </tr>
 </table>
 
@@ -96,7 +95,7 @@ companion, and hardware-wallet reading over NFC. Eight languages. Dark throughou
 
 <table>
   <tr>
-    <td align="center"><img src="docs/assets/manual-trade.png" width="250"/><br/><sub>Manual trade entry</sub></td>
+    <td align="center"><img src="docs/assets/manual-trade.png" width="400"/><br/><sub>Manual trade entry</sub></td>
   </tr>
 </table>
 
@@ -112,16 +111,16 @@ flowchart TD
     DM --> Store[(SwiftData)]
     DM --> Sync[Auto-sync + reconciliation]
     Sync --> Provider[ExchangeProvider protocol]
-    Provider --> EX["12 venue services<br/>signing · mapping · rate limiting"]
-    DM --> Engines["Engines<br/>Risk · Tax · Options · Correlation · On-chain · Strategy"]
+    Provider --> EX["one service per venue<br/>signing · mapping · rate limiting"]
+    DM --> Engines["Engines<br/>Risk · Tax · Correlation · On-chain · Strategy"]
     DM --> Views[SwiftUI · iOS / iPadOS / macOS / watchOS]
     Engines --> Views
 ```
 
-Roughly 250,000 lines of Swift across 739 files, built over six months. No third-party packages
+Roughly 250,000 lines of Swift across 739 files, built since February 2026. No third-party packages
 at all — not a single SPM dependency in the project.
 
-### One protocol, twelve venues
+### One protocol for every venue
 
 Every exchange sits behind a single `ExchangeProvider`. Adding one means a service, a mapper, a
 model layer and a signing variant, and touching nothing in the sync engine. They disagree on
@@ -129,7 +128,7 @@ almost every axis that matters:
 
 | | |
 |---|---|
-| **Signing** | Six families across twelve venues: HMAC-SHA256 to Base64 and to hex, HMAC-SHA512 with a body pre-hash, HMAC-SHA384, a dual SHA-256 → HMAC-SHA512 scheme with two different pre-hash orders, and asymmetric JWT ES256 over ECDSA P-256 |
+| **Signing** | Five families across the venues: HMAC-SHA256 to Base64 and to hex, HMAC-SHA512 with a body pre-hash, HMAC-SHA384, and a dual SHA-256 → HMAC-SHA512 scheme with two different pre-hash orders |
 | **Shape** | Keyed JSON against Bitfinex's positional arrays; success signalled by `code: 0`, by `code: "0"`, or by HTTP status alone |
 | **Paging** | Cursors, page numbers, and continuation tokens carried in HTTP headers |
 | **Quirks** | Dual domains with dual auth schemes, a passphrase that must itself be HMAC-hashed, a four-credential model, stateful bearer tokens, and ticker formats from `XBTUSDTM` to `tBTCF0:USTF0` normalized to one symbol |
@@ -173,7 +172,7 @@ finds it.
 **Debug tooling that ships as zero bytes.** The entire instrumentation layer is compiled out of
 release builds, verified against the binary rather than by searching the source.
 
-CI enforces the localization and consistency gates on every push. The full test suite runs
+CI enforces the localization and consistency gates on every push to main. The full test suite runs
 locally before a release, because a meaningful share of it talks to live exchange APIs and would
 be flaky on a hosted runner.
 
